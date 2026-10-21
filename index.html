@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--
+  =====================================================
+  MenuKu - TAHAP 1: KERANGKA HTML
+  =====================================================
+  HTML itu seperti "kerangka bangunan": ia hanya menentukan
+  ADA APA SAJA di halaman (judul, tombol, daftar, dll).
+  Warna & tata letak diatur nanti di CSS (tahap 2),
+  dan kemampuan "bergerak" diatur di JavaScript (tahap 3).
+
+  Catatan: atribut id="..." dan class="..." di bawah ini
+  adalah "nama panggilan" elemen. CSS dan JS akan memakai
+  nama-nama ini untuk menemukan elemennya, jadi jangan
+  diganti sembarangan.
+-->
+<html lang="id">
+
+<head>
+  <!-- Mengatur agar teks Indonesia (huruf & simbol) tampil benar -->
+  <meta charset="UTF-8">
+
+  <!-- WAJIB: membuat halaman pas di layar HP, tidak tampil kecil -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Judul yang muncul di tab browser -->
+  <title>MenuKu - Menu Digital Cafe</title>
+
+  <!-- Deskripsi singkat website (dibaca mesin pencari) -->
+  <meta name="description" content="Lihat menu, hitung total, dan patungan langsung dari HP.">
+
+  <!--
+    Hubungan ke berkas CSS (tahap 2).
+    Tanda <!-- --> di sekeliling membuatnya "dimatikan" sementara.
+    Setelah berkas style.css selesai dibuat, HAPUS tanda komentar
+    pada baris di bawah ini agar CSS aktif.
+  -->
+  <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+
+<body>
+
+  <!-- =====================================================
+       1. HEADER: judul cafe dan nomor meja
+       ===================================================== -->
+  <header class="header">
+    <h1 class="header__judul">MenuKu</h1>
+    <p class="header__sub">
+      Pesan dari HP, hitung patungan, tanpa rebutan buku menu.
+    </p>
+
+    <!-- Nomor meja akan diisi otomatis oleh JavaScript dari alamat QR -->
+    <p class="header__meja">Meja: <span id="nomor-meja">-</span></p>
+  </header>
+
+  <!-- <main> berisi isi utama halaman -->
+  <main>
+
+    <!-- =====================================================
+         2. PENCARIAN DAN FILTER
+         ===================================================== -->
+    <section class="filter" aria-label="Cari dan saring menu">
+
+      <!-- Kolom pencarian. <label> membantu pembaca layar & memperbesar area ketuk -->
+      <label for="kolom-cari" class="filter__label">Cari menu</label>
+      <input
+        type="search"
+        id="kolom-cari"
+        class="filter__cari"
+        placeholder="Contoh: nasi goreng, es teh"
+      >
+
+      <!-- Tombol kategori. data-kategori dipakai JS untuk tahu kategori mana yang dipilih -->
+      <div class="filter__kategori" id="tombol-kategori">
+        <button type="button" class="chip chip--aktif" data-kategori="semua">Semua</button>
+        <button type="button" class="chip" data-kategori="makanan">Makanan</button>
+        <button type="button" class="chip" data-kategori="cemilan">Cemilan</button>
+        <button type="button" class="chip" data-kategori="kopi">Kopi</button>
+        <button type="button" class="chip" data-kategori="non-kopi">Non-Kopi</button>
+      </div>
+
+      <!-- Filter tambahan memakai kotak centang (checkbox) -->
+      <div class="filter__opsi">
+        <label>
+          <input type="checkbox" id="filter-hemat">
+          Di bawah Rp20.000
+        </label>
+
+        <label>
+          <input type="checkbox" id="filter-tanpa-pedas">
+          Tanpa pedas
+        </label>
+
+        <label>
+          <input type="checkbox" id="filter-terlaris">
+          Paling laris
+        </label>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         3. DAFTAR MENU
+         Di tahap 3, JavaScript akan mengisi area ini dari menu.json.
+         Dua kartu di bawah hanyalah CONTOH agar kamu bisa melihat
+         bentuknya sekarang. Nanti keduanya dihapus/diganti oleh JS.
+         ===================================================== -->
+    <section class="menu" aria-label="Daftar menu">
+      <h2 class="menu__judul">Daftar Menu</h2>
+
+      <div class="menu__daftar" id="daftar-menu">
+
+        <!-- CONTOH KARTU MENU 1 (struktur ini yang akan diulang oleh JS) -->
+        <article class="kartu">
+          <!-- alt = teks pengganti jika gambar gagal tampil -->
+          <img class="kartu__foto" src="images/nasi-goreng.jpg" alt="Nasi goreng spesial">
+          <div class="kartu__isi">
+            <h3 class="kartu__nama">Nasi Goreng Spesial</h3>
+            <p class="kartu__deskripsi">Nasi goreng dengan telur dan ayam suwir.</p>
+            <p class="kartu__harga">Rp18.000</p>
+            <button type="button" class="tombol tombol--tambah">Tambah</button>
+          </div>
+        </article>
+
+        <!-- CONTOH KARTU MENU 2 -->
+        <article class="kartu">
+          <img class="kartu__foto" src="images/es-teh.jpg" alt="Es teh manis">
+          <div class="kartu__isi">
+            <h3 class="kartu__nama">Es Teh Manis</h3>
+            <p class="kartu__deskripsi">Teh dingin yang segar, manisnya pas.</p>
+            <p class="kartu__harga">Rp6.000</p>
+            <button type="button" class="tombol tombol--tambah">Tambah</button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pesan ini ditampilkan JS bila hasil pencarian kosong. hidden = disembunyikan dulu -->
+      <p class="menu__kosong" id="pesan-kosong" hidden>
+        Menu tidak ditemukan. Coba kata lain atau matikan filter.
+      </p>
+    </section>
+
+    <!-- =====================================================
+         4. KERANJANG PESANAN, PATUNGAN, DAN KIRIM
+         ===================================================== -->
+    <section class="keranjang" aria-label="Keranjang pesanan">
+      <h2 class="keranjang__judul">Pesananmu</h2>
+
+      <!-- Daftar item pesanan; diisi JS saat tombol "Tambah" ditekan -->
+      <ul class="keranjang__daftar" id="daftar-keranjang">
+        <!-- CONTOH item (nanti dibuat otomatis oleh JS) -->
+        <li class="keranjang__item">
+          <span class="keranjang__nama">Es Teh Manis</span>
+          <span class="keranjang__jumlah">
+            <button type="button" class="tombol tombol--kecil" aria-label="Kurangi jumlah">-</button>
+            <span>1</span>
+            <button type="button" class="tombol tombol--kecil" aria-label="Tambah jumlah">+</button>
+          </span>
+          <span class="keranjang__subtotal">Rp6.000</span>
+        </li>
+      </ul>
+
+      <!-- Tampil saat keranjang masih kosong -->
+      <p class="keranjang__kosong" id="keranjang-kosong" hidden>
+        Belum ada pesanan. Tekan "Tambah" pada menu yang kamu mau.
+      </p>
+
+      <!-- Total harga semua pesanan -->
+      <p class="keranjang__total">
+        Total: <strong id="total-harga">Rp6.000</strong>
+      </p>
+
+      <!-- Bagian patungan -->
+      <div class="patungan">
+        <h3 class="patungan__judul">Patungan</h3>
+
+        <label for="jumlah-orang">Jumlah orang yang patungan</label>
+        <input type="number" id="jumlah-orang" class="patungan__input" min="1" value="1">
+
+        <p class="patungan__hasil">
+          Tiap orang bayar: <strong id="hasil-patungan">Rp6.000</strong>
+        </p>
+      </div>
+
+      <!--
+        Tombol kirim lewat WhatsApp.
+        Alamat (href) akan disusun otomatis oleh JS, jadi isinya "#" dulu.
+      -->
+      <a href="#" class="tombol tombol--wa" id="tombol-wa" target="_blank" rel="noopener">
+        Kirim Pesanan via WhatsApp
+      </a>
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       5. FOOTER
+       ===================================================== -->
+  <footer class="footer">
+    <p>Dibuat dengan HTML, CSS, dan JavaScript.</p>
+  </footer>
+
+  <!--
+    Hubungan ke berkas JavaScript (tahap 3).
+    Letaknya di PALING BAWAH <body> supaya seluruh elemen di atas
+    sudah ada sebelum JS mencarinya. Hapus tanda komentar nanti.
+    "defer" artinya: jalankan setelah halaman selesai dimuat.
+  -->
+  <!-- <script src="script.js" defer></script> -->
+
+</body>
+
+</html>
