@@ -1,0 +1,102 @@
+[
+  {
+    "id": "nasi-goreng",
+    "nama": "Nasi Goreng Spesial",
+    "kategori": "makanan",
+    "harga": 18000,
+    "deskripsi": "Nasi goreng dengan telur dan ayam suwir.",
+    "foto": "images/nasi-goreng.jpg",
+    "pedas": true,
+    "terlaris": true
+  },
+  {
+    "id": "mie-goreng",
+    "nama": "Mie Goreng Jawa",
+    "kategori": "makanan",
+    "harga": 16000,
+    "deskripsi": "Mie goreng berbumbu manis gurih dengan sayuran.",
+    "foto": "images/mie-goreng.jpg",
+    "pedas": false,
+    "terlaris": false
+  },
+  {
+    "id": "ayam-geprek",
+    "nama": "Ayam Geprek",
+    "kategori": "makanan",
+    "harga": 22000,
+    "deskripsi": "Ayam krispi digeprek dengan sambal bawang, plus nasi.",
+    "foto": "images/ayam-geprek.jpg",
+    "pedas": true,
+    "terlaris": true
+  },
+  {
+    "id": "kentang-goreng",
+    "nama": "Kentang Goreng",
+    "kategori": "cemilan",
+    "harga": 12000,
+    "deskripsi": "Kentang goreng renyah, cocok untuk dimakan ramai-ramai.",
+    "foto": "images/kentang-goreng.jpg",
+    "pedas": false,
+    "terlaris": true
+  },
+  {
+    "id": "pisang-coklat",
+    "nama": "Pisang Coklat",
+    "kategori": "cemilan",
+    "harga": 10000,
+    "deskripsi": "Pisang goreng dengan lelehan coklat.",
+    "foto": "images/pisang-coklat.jpg",
+    "pedas": false,
+    "terlaris": false
+  },
+  {
+    "id": "es-kopi-susu",
+    "nama": "Es Kopi Susu",
+    "kategori": "kopi",
+    "harga": 15000,
+    "deskripsi": "Espresso, susu segar, dan gula aren.",
+    "foto": "images/es-kopi-susu.jpg",
+    "pedas": false,
+    "terlaris": true
+  },
+  {
+    "id": "americano",
+    "nama": "Americano",
+    "kategori": "kopi",
+    "harga": 14000,
+    "deskripsi": "Kopi hitam ringan tanpa susu.",
+    "foto": "images/americano.jpg",
+    "pedas": false,
+    "terlaris": false
+  },
+  {
+    "id": "es-teh",
+    "nama": "Es Teh Manis",
+    "kategori": "non-kopi",
+    "harga": 6000,
+    "deskripsi": "Teh dingin yang segar, manisnya pas.",
+    "foto": "images/es-teh.jpg",
+    "pedas": false,
+    "terlaris": true
+  },
+  {
+    "id": "coklat-dingin",
+    "nama": "Coklat Dingin",
+    "kategori": "non-kopi",
+    "harga": 16000,
+    "deskripsi": "Minuman coklat pekat dengan es batu.",
+    "foto": "images/coklat-dingin.jpg",
+    "pedas": false,
+    "terlaris": false
+  },
+  {
+    "id": "lemon-tea",
+    "nama": "Lemon Tea",
+    "kategori": "non-kopi",
+    "harga": 9000,
+    "deskripsi": "Teh dengan perasan lemon, asam segar.",
+    "foto": "images/lemon-tea.jpg",
+    "pedas": false,
+    "terlaris": false
+  }
+]
