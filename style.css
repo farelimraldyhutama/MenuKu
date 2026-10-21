@@ -1,0 +1,473 @@
+/* =====================================================
+   MenuKu - TAHAP 2: CSS (TAMPILAN)
+   =====================================================
+   CSS mengatur TAMPILAN: warna, ukuran, jarak, dan tata letak.
+   Cara kerjanya: pilih elemen dengan "selector", lalu tulis
+   aturan di dalam kurung kurawal { }.
+
+   Contoh:   .kartu { background: white; }
+             ^ selector  ^ properti : nilai
+
+   Daftar isi:
+   1. Variabel (warna, ukuran) 
+   2. Reset dan pengaturan dasar
+   3. Header
+   4. Pencarian dan filter
+   5. Daftar menu dan kartu
+   6. Tombol
+   7. Keranjang dan patungan
+   8. Footer
+   9. Layar lebar (tablet / laptop)
+   ===================================================== */
+
+
+/* =====================================================
+   1. VARIABEL
+   Variabel CSS diawali "--". Kita tulis warna SEKALI di sini,
+   lalu pakai berkali-kali dengan var(--nama).
+   Mau ganti tema? Cukup ubah nilai di bagian ini saja.
+   ===================================================== */
+:root {
+  /* Warna */
+  --warna-latar: #f1f5f4;        /* latar halaman: abu kehijauan sangat muda */
+  --warna-kartu: #ffffff;        /* latar kartu */
+  --warna-teks: #1b2a2f;         /* teks utama (bukan hitam pekat, lebih nyaman) */
+  --warna-teks-redup: #5a6b70;   /* teks pendukung */
+  --warna-utama: #0e6b66;        /* hijau tosca tua: tombol & judul */
+  --warna-utama-gelap: #0a504c;  /* versi lebih gelap, untuk efek saat disentuh */
+  --warna-aksen: #ffc83d;        /* kuning: penanda harga & filter aktif */
+  --warna-garis: #d5dfdd;        /* garis pembatas tipis */
+  --warna-foto: #dbe7e5;         /* warna isi sementara jika foto belum ada */
+  --warna-wa: #1a9d55;           /* hijau WhatsApp */
+
+  /* Ukuran dan bentuk */
+  --lengkung: 14px;              /* kelengkungan sudut */
+  --jarak: 16px;                 /* jarak standar antar elemen */
+  --lebar-maks: 960px;           /* lebar maksimal isi di layar besar */
+}
+
+/* Mode gelap otomatis: aktif jika HP pengguna disetel ke mode gelap.
+   Kita hanya mengganti nilai variabel; aturan lain tidak perlu diubah. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --warna-latar: #0f1a1c;
+    --warna-kartu: #182628;
+    --warna-teks: #e8f0ef;
+    --warna-teks-redup: #9db0b3;
+    --warna-utama: #3cc3b9;
+    --warna-utama-gelap: #5fd6cd;
+    --warna-garis: #2a3d40;
+    --warna-foto: #223639;
+  }
+}
+
+
+/* =====================================================
+   2. RESET DAN PENGATURAN DASAR
+   Tiap browser punya gaya bawaan yang sedikit berbeda.
+   Bagian ini menyamakan titik awalnya.
+   ===================================================== */
+
+/* "*" artinya semua elemen.
+   border-box: lebar elemen sudah termasuk padding & garis tepi,
+   jadi hitungan ukuran lebih mudah ditebak. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;                     /* hapus jarak bawaan browser */
+  background: var(--warna-latar);
+  color: var(--warna-teks);
+  /* Font bawaan sistem: cepat dimuat, tidak perlu internet (cocok untuk offline) */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;               /* 1rem = ukuran teks standar browser (16px) */
+  line-height: 1.5;              /* jarak antar baris agar mudah dibaca */
+}
+
+/* Atribut "hidden" di HTML seharusnya menyembunyikan elemen.
+   Aturan display di bawah bisa membatalkannya, jadi kita kunci di sini. */
+[hidden] {
+  display: none !important;
+}
+
+/* Semua gambar tidak boleh melebihi lebar tempatnya */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Pembungkus isi utama: dibatasi lebarnya dan ditaruh di tengah */
+main {
+  max-width: var(--lebar-maks);
+  margin: 0 auto;                /* "auto" di kiri-kanan = rata tengah */
+  padding: 0 var(--jarak) var(--jarak);
+}
+
+/* Cincin fokus: garis yang muncul saat elemen dipilih dengan keyboard.
+   Penting untuk aksesibilitas, jadi jangan dihapus. */
+:focus-visible {
+  outline: 3px solid var(--warna-aksen);
+  outline-offset: 2px;
+}
+
+
+/* =====================================================
+   3. HEADER
+   ===================================================== */
+.header {
+  background: var(--warna-utama);
+  color: #ffffff;
+  padding: 28px var(--jarak) 24px;
+  margin-bottom: var(--jarak);
+}
+
+.header__judul {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.02em;       /* rapatkan sedikit huruf judul */
+}
+
+.header__sub {
+  margin: 4px 0 12px;
+  opacity: 0.9;
+}
+
+/* Label nomor meja berbentuk "pil" kuning */
+.header__meja {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 14px;
+  background: var(--warna-aksen);
+  color: #1b2a2f;
+  border-radius: 999px;          /* angka besar = ujung bulat sempurna */
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   4. PENCARIAN DAN FILTER
+   ===================================================== */
+.filter {
+  display: grid;                 /* susun anak elemen dari atas ke bawah */
+  gap: 12px;                     /* jarak antar anak elemen */
+  margin-bottom: 24px;
+}
+
+.filter__label {
+  font-weight: 600;
+}
+
+.filter__cari {
+  width: 100%;
+  min-height: 48px;              /* cukup besar untuk jempol */
+  padding: 0 16px;
+  font: inherit;                 /* pakai font yang sama dengan halaman */
+  color: var(--warna-teks);
+  background: var(--warna-kartu);
+  border: 2px solid var(--warna-garis);
+  border-radius: var(--lengkung);
+}
+
+/* Efek saat kolom diklik */
+.filter__cari:focus {
+  border-color: var(--warna-utama);
+}
+
+/* Deretan tombol kategori.
+   flex-wrap: jika tidak muat satu baris, turun ke baris berikutnya. */
+.filter__kategori {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* "Chip" = tombol kecil berbentuk pil */
+.chip {
+  min-height: 40px;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--warna-teks);
+  background: var(--warna-kartu);
+  border: 2px solid var(--warna-garis);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Chip yang sedang dipilih. JS nanti menambahkan class ini. */
+.chip--aktif {
+  background: var(--warna-aksen);
+  border-color: var(--warna-aksen);
+  color: #1b2a2f;
+}
+
+/* Kotak centang: sejajar menyamping, turun baris jika sempit */
+.filter__opsi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  color: var(--warna-teks-redup);
+}
+
+.filter__opsi label {
+  display: flex;
+  align-items: center;           /* kotak dan teks sejajar vertikal */
+  gap: 8px;
+  min-height: 40px;              /* area ketuk cukup besar */
+  cursor: pointer;
+}
+
+.filter__opsi input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--warna-utama); /* warna kotak centang */
+}
+
+
+/* =====================================================
+   5. DAFTAR MENU DAN KARTU
+   ===================================================== */
+.menu__judul,
+.keranjang__judul {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+}
+
+/* Susunan kartu: 1 kolom di HP (versi layar besar ada di bagian 9) */
+.menu__daftar {
+  display: grid;
+  grid-template-columns: 1fr;    /* 1fr = satu bagian yang sama lebar */
+  gap: var(--jarak);
+}
+
+.kartu {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;              /* potong foto yang keluar dari sudut lengkung */
+  background: var(--warna-kartu);
+  border: 1px solid var(--warna-garis);
+  border-radius: var(--lengkung);
+}
+
+.kartu__foto {
+  width: 100%;
+  aspect-ratio: 4 / 3;           /* bingkai foto selalu perbandingan 4:3 */
+  object-fit: cover;             /* foto memenuhi bingkai tanpa gepeng */
+  background: var(--warna-foto); /* tampil jika foto belum ada */
+}
+
+.kartu__isi {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                       /* isi kartu mengisi sisa ruang */
+  gap: 6px;
+  padding: var(--jarak);
+}
+
+.kartu__nama {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.kartu__deskripsi {
+  margin: 0;
+  color: var(--warna-teks-redup);
+  font-size: 0.95rem;
+}
+
+/* Harga: di-"stabilo" kuning agar menonjol */
+.kartu__harga {
+  align-self: flex-start;        /* lebar mengikuti isi, tidak melebar */
+  margin: 4px 0 8px;
+  padding: 2px 10px;
+  background: var(--warna-aksen);
+  color: #1b2a2f;
+  font-weight: 800;
+  border-radius: 8px;
+}
+
+/* margin-top: auto mendorong tombol selalu ke dasar kartu,
+   jadi semua tombol sejajar walau panjang deskripsi berbeda */
+.kartu .tombol--tambah {
+  margin-top: auto;
+}
+
+.menu__kosong,
+.keranjang__kosong {
+  padding: 24px;
+  text-align: center;
+  color: var(--warna-teks-redup);
+  border: 2px dashed var(--warna-garis);
+  border-radius: var(--lengkung);
+}
+
+
+/* =====================================================
+   6. TOMBOL
+   ".tombol" adalah gaya dasar. Variasinya memakai
+   class tambahan dengan awalan "--" (disebut "modifier").
+   ===================================================== */
+.tombol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 20px;
+  font: inherit;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--warna-utama);
+  border: none;
+  border-radius: var(--lengkung);
+  text-decoration: none;         /* hapus garis bawah pada tautan <a> */
+  cursor: pointer;
+  transition: background 0.15s;  /* perubahan warna halus saat disentuh */
+}
+
+.tombol:hover {
+  background: var(--warna-utama-gelap);
+}
+
+/* Tombol "+" dan "-" berukuran kecil dan bulat */
+.tombol--kecil {
+  min-height: 40px;
+  min-width: 40px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+/* Tombol WhatsApp: lebar penuh, warna hijau WA */
+.tombol--wa {
+  width: 100%;
+  margin-top: var(--jarak);
+  background: var(--warna-wa);
+}
+
+.tombol--wa:hover {
+  background: #14803f;
+}
+
+
+/* =====================================================
+   7. KERANJANG DAN PATUNGAN
+   ===================================================== */
+.keranjang {
+  margin-top: 32px;
+  padding: var(--jarak);
+  background: var(--warna-kartu);
+  border: 1px solid var(--warna-garis);
+  border-radius: var(--lengkung);
+}
+
+/* Reset daftar: hilangkan titik/nomor bawaan <ul> */
+.keranjang__daftar {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Satu baris pesanan dibagi 3 kolom: nama | jumlah | subtotal */
+.keranjang__item {
+  display: grid;
+  grid-template-columns: 1fr auto auto; /* nama melebar, dua lainnya seukuran isi */
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--warna-garis);
+}
+
+.keranjang__nama {
+  font-weight: 600;
+}
+
+.keranjang__jumlah {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.keranjang__subtotal {
+  min-width: 80px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.keranjang__total {
+  display: flex;
+  justify-content: space-between;  /* tulisan di kiri, angka di kanan */
+  margin: var(--jarak) 0;
+  font-size: 1.2rem;
+}
+
+/* Kotak patungan dengan latar sedikit berbeda */
+.patungan {
+  display: grid;
+  gap: 8px;
+  padding: var(--jarak);
+  background: var(--warna-latar);
+  border-radius: var(--lengkung);
+}
+
+.patungan__judul {
+  margin: 0;
+}
+
+.patungan__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  font: inherit;
+  color: var(--warna-teks);
+  background: var(--warna-kartu);
+  border: 2px solid var(--warna-garis);
+  border-radius: var(--lengkung);
+}
+
+.patungan__hasil {
+  margin: 4px 0 0;
+  font-size: 1.1rem;
+}
+
+
+/* =====================================================
+   8. FOOTER
+   ===================================================== */
+.footer {
+  padding: 24px var(--jarak);
+  text-align: center;
+  color: var(--warna-teks-redup);
+  font-size: 0.9rem;
+}
+
+
+/* =====================================================
+   9. LAYAR LEBAR
+   @media = "aturan ini hanya berlaku jika syaratnya terpenuhi".
+   Karena kita menulis untuk HP dulu (mobile-first), di sini kita
+   hanya menambah aturan untuk layar yang lebih lebar.
+   ===================================================== */
+
+/* Layar dengan lebar minimal 600px (tablet kecil): kartu jadi 2 kolom */
+@media (min-width: 600px) {
+  .menu__daftar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Layar dengan lebar minimal 900px (laptop): kartu jadi 3 kolom */
+@media (min-width: 900px) {
+  .menu__daftar {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Hormati pengguna yang mematikan animasi di pengaturan perangkatnya */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
